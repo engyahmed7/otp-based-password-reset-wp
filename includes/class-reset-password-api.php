@@ -30,10 +30,21 @@ class AppExpert_Password_Reset_API
         if (!email_exists($email)) return new WP_Error('email_not_found', 'Email not found.', ['status' => 404]);
 
         $user = get_user_by('email', $email);
-        $otp = wp_rand(100000, 999999);
+        $attempts = get_user_meta($user->ID, 'appExpert_otp_attempts', true) ?: 0;
+        $last_attempt_time = get_user_meta($user->ID, 'appExpert_otp_last_attempt', true) ?: 0;
+
+        if ($attempts >= MAX_ATTEMPTS && (time() - $last_attempt_time) < 5) {
+            return new WP_Error('max_attempts_reached', 'Maximum OTP attempts reached. Please wait 5 seconds before trying again.', ['status' => 429]);
+        }
+
+        if ((time() - $last_attempt_time) >= 5) $attempts = 0;
+
+        $otp = wp_rand(pow(10, OTP_LENGTH - 1), pow(10, OTP_LENGTH) - 1);
 
         update_user_meta($user->ID, 'appExpert_otp', $otp);
-        update_user_meta($user->ID, 'appExpert_otp_expires', time() + 10 * 60);
+        update_user_meta($user->ID, 'appExpert_otp_expires', time() + OTP_EXPIRATION);
+        update_user_meta($user->ID, 'appExpert_otp_attempts', $attempts + 1);
+        update_user_meta($user->ID, 'appExpert_otp_last_attempt', time());
 
         wp_mail($email, 'Your OTP Code', 'Your OTP is: ' . $otp);
 

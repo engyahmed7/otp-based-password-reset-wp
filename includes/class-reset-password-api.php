@@ -53,7 +53,7 @@ class AppExpert_Password_Reset_API
                 "We have received a request to reset the password for your account on %s.\n\n" .
                 "Your One-Time Password (OTP) is:\n\n" .
                 "%s\n\n" .
-                "Please enter this code on the password reset page to proceed." .
+                "Please enter this code on the password reset page to proceed.\n\n" .
                 "Note: This code is valid for %s minutes only. \nIf you did not request a password reset, please ignore this email. Your account remains secure.\n\n" .
                 "Best regards,\n" .
                 "The %s Team",

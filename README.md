@@ -69,15 +69,14 @@ graph TD
 
 ### Requirements
 - WordPress ≥5.8 (REST API support)
-- PHP ≥7.4 with OpenSSL extension
+- PHP ≥7.4 
 - SMTP server configured for email delivery
 
 ### Installation
-```bash
-# Clone repository into plugins directory
-cd wp-content/plugins/
-git clone https://github.com/yourrepo/app-expert-password-reset.git
-```
+1. Download the plugin files.
+2. Upload the plugin folder to the `wp-content/plugins/` directory.
+3. Activate the plugin through the **Plugins** menu in WordPress.
+
 
 ### Configuration
 1. Set environment variables in `config.php`:

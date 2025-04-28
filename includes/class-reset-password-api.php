@@ -46,7 +46,25 @@ class AppExpert_Password_Reset_API
         update_user_meta($user->ID, 'appExpert_otp_attempts', $attempts + 1);
         update_user_meta($user->ID, 'appExpert_otp_last_attempt', time());
 
-        wp_mail($email, 'Your OTP Code', 'Your OTP is: ' . $otp);
+        $user_name = $user->display_name;
+        $subject = 'Password Reset Request - AppExpert';
+        $message = sprintf(
+            "Hello %s,\n\n" .
+                "We have received a request to reset the password for your account on %s.\n\n" .
+                "Your One-Time Password (OTP) is:\n\n" .
+                "%s\n\n" .
+                "Please enter this code on the password reset page to proceed." .
+                "Note: This code is valid for %s minutes only. \nIf you did not request a password reset, please ignore this email. Your account remains secure.\n\n" .
+                "Best regards,\n" .
+                "The %s Team",
+            $user_name,
+            APP_NAME,
+            $otp,
+            OTP_EXPIRATION / 60,
+            APP_NAME
+        );
+
+        wp_mail($email, $subject, $message);
 
         return ['message' => 'OTP sent successfully.'];
     }

@@ -87,7 +87,7 @@ class AppExpert_Password_Reset_API
 
         if ($saved_otp != $otp) return new WP_Error('otp_invalid', 'Invalid OTP.', ['status' => 400]);
 
-        AppExpert_Helper::update_user_meta($user->ID, 'otp_verified', true);
+        AppExpert_Helper::update_user_meta($user->ID, ['otp_verified' => true]);
 
         return ['message' => 'OTP verified successfully.'];
     }

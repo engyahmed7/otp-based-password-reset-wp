@@ -108,6 +108,27 @@ delete_user_meta($user_id, 'appExpert_otp_attempts');
 delete_user_meta($user_id, 'appExpert_otp_last_attempt');
 
 ```
+
+---
+
+## Professional Email Template Design
+
+**Location**: `email-templates/password-reset-email.php`
+
+**Template Includes**:
+- Mobile-responsive structure
+- Branded header/footer sections
+- Clear visual hierarchy for OTP display
+- Dynamic variables for personalization:
+  ```php
+  <?= htmlspecialchars($user_name) ?>
+  <?= htmlspecialchars(APP_NAME) ?>
+  <?= htmlspecialchars((OTP_EXPIRATION / 60)) ?>
+  ```
+
+**Preview**:  
+![Screenshot from 2025-05-08 16-00-30](https://github.com/user-attachments/assets/58e9327b-a712-4d00-9b19-d0524db52b89)
+
 ---
 
 ## Error Handling Matrix
